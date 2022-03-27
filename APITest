@@ -1,0 +1,49 @@
+const axios = require('axios');
+
+const cardDataArray = []
+const cardNameArray = ["Veil of Summer", "Brainstorm", "City of Brass"]
+
+async function getCardByName(cardName){
+    try {
+
+        let encodedCardName = encodeURIComponent(cardName)
+        let res = await axios.get(`https://api.scryfall.com/cards/named?exact=${encodedCardName}`)
+        return res.data;
+    }
+    catch (err) {
+        throw err
+    }
+  
+}
+
+async function getCardData(cardName){
+    try {
+ 
+        let res = await getCardByName(cardName)
+        if (Array.isArray(res)){
+            res = res[0]
+        }
+        let cardData = new Object()
+        cardData.name = res.name;
+        cardData.manaCost = res.mana_cost;
+        console.log(cardData)
+        return cardData
+    }
+    catch (err) {
+        throw err
+    }
+
+}
+
+async function cardNameArrayLookUp(array){
+
+for(let i = 0; i < array.length; i++){
+    let cardData = await getCardData(array[i])
+    cardDataArray.push(cardData)
+    console.log(cardDataArray)
+}
+
+
+}
+
+cardNameArrayLookUp(cardNameArray)
