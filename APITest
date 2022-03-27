@@ -40,9 +40,10 @@ async function cardNameArrayLookUp(array){
 for(let i = 0; i < array.length; i++){
     let cardData = await getCardData(array[i])
     cardDataArray.push(cardData)
-    console.log(cardDataArray)
+    
 }
 
+console.log(cardDataArray)
 
 }
 
